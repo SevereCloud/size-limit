@@ -30,7 +30,8 @@ let OPTIONS = {
   running: 'time',
   time: 'time',
   uiReports: 'webpack',
-  webpack: 'webpack'
+  webpack: 'webpack',
+  zstd: 'file'
 }
 
 function isStrings(value) {

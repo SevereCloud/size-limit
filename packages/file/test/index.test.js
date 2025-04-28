@@ -1,8 +1,11 @@
 import { join } from 'node:path'
+import * as zlib from 'node:zlib'
 import { expect, it } from 'vitest'
 
 import filePkg from '../index.js'
 const [file] = filePkg
+
+const unsupportZstd = !Object.hasOwn(zlib, "createZstdCompress")
 
 function fixture(name) {
   return join(__dirname, 'fixtures', name)
@@ -51,6 +54,15 @@ it('calculates file size with gzip by true value', async () => {
   await file.step60(config, config.checks[0])
 
   expect(config.checks[0].size).toBe(29)
+})
+
+it.skipIf(unsupportZstd)('calculates file size with zstd by true value', async () => {
+  let config = {
+    checks: [{ files: [fixture('b.txt')], zstd: true }]
+  }
+  await file.step60(config, config.checks[0])
+
+  expect(config.checks[0].size).toBe(23)
 })
 
 it('uses webpack bundle if available', async () => {

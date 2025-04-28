@@ -16,6 +16,14 @@ exports[`returns zero for empty esbuild file and with gzip 1`] = `
 "
 `;
 
+exports[`returns zero for empty esbuild file and with zstd 1`] = `
+"  
+  Size limit: [32m[1m0 B[22m[39m
+  Size:       [32m[1m0 B[22m[39m [90mwith all dependencies, minified and zstded[39m
+  
+"
+`;
+
 exports[`returns zero for empty esbuild file and without compression 1`] = `
 "  
   Size limit: [32m[1m0 B[22m[39m
@@ -36,6 +44,14 @@ exports[`returns zero for empty file with webpack 1`] = `
 "  
   Size limit: [32m[1m0 B[22m[39m
   Size:       [32m[1m0 B[22m[39m [90mwith all dependencies, minified and brotlied[39m
+  
+"
+`;
+
+exports[`returns zero for empty webpack file and with zstd 1`] = `
+"  
+  Size limit: [32m[1m0 B[22m[39m
+  Size:       [32m[1m0 B[22m[39m [90mwith all dependencies, minified and zstded[39m
   
 "
 `;
@@ -210,6 +226,17 @@ exports[`shows gzip text when only gzip in config 1`] = `
 "
 `;
 
+exports[`shows gzip text when only zstd in config 1`] = `
+"  
+  Size limit:   [32m[1m1 kB[22m[39m
+  Size:         [32m[1m9 B  [22m[39m [90mwith all dependencies, minified and zstded[39m
+  Loading time: [32m[1m10 ms[22m[39m [90mon slow 3G[39m
+  Running time: [32m[1m1 s  [22m[39m [90mon Snapdragon 410[39m
+  Total time:   [32m[1m1.1 s[22m[39m
+  
+"
+`;
+
 exports[`shows help 1`] = `
 "[33msize-limit [OPTION]… [FILE]…[39m
 Check the real performance cost of your front-end project to users
@@ -343,6 +370,17 @@ Check the real performance cost of your front-end project to users
 "
 `;
 
+exports[`shows zstd text when only zstd in config 1`] = `
+"  
+  Size limit:   [32m[1m1 kB[22m[39m
+  Size:         [32m[1m0 B [22m[39m [90mwith all dependencies, minified and zstded[39m
+  Loading time: [32m[1m0 ms[22m[39m [90mon slow 3G[39m
+  Running time: [32m[1m1 s [22m[39m [90mon Snapdragon 410[39m
+  Total time:   [32m[1m1 s[22m[39m
+  
+"
+`;
+
 exports[`supports import and ignore for esbuild 1`] = `
 "  
   [42m[30mPackage size is 4 B less than limit[39m[49m
@@ -365,6 +403,15 @@ exports[`supports import and ignore for esbuild and gzip 1`] = `
 "  
   Size limit: [32m[1m46 B[22m[39m
   Size:       [32m[1m46 B[22m[39m [90mwith all dependencies, minified and gzipped[39m
+  
+"
+`;
+
+exports[`supports import and ignore for esbuild and zstd 1`] = `
+"  
+  [42m[30mPackage size is 12 B less than limit[39m[49m
+  Size limit: [32m[1m46 B[22m[39m
+  Size:       [32m[1m34 B[22m[39m [90mwith all dependencies, minified and zstded[39m
   
 "
 `;

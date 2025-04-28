@@ -2,6 +2,7 @@ import filePkg from '@size-limit/file'
 import { existsSync } from 'node:fs'
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import * as zlib from 'node:zlib'
 import { SizeLimitError } from 'size-limit'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
@@ -11,6 +12,8 @@ const [esbuild] = esbuildPkg
 
 const ROOT_CONFIG = join(__dirname, '..', '..', '.size-limit.json')
 const DIST = join(process.cwd(), 'dist')
+
+const unsupportZstd = !Object.hasOwn(zlib, "createZstdCompress")
 
 function fixture(name) {
   return join(__dirname, 'fixtures', name)
@@ -314,6 +317,18 @@ it('supports specifying the import', async () => {
       }
     })
   ).toBe(87)
+})
+
+it.skipIf(unsupportZstd)('supports specifying the import with zstd', async () => {
+  expect(
+    await getSize({
+      files: [fixture('esm/module.js')],
+      import: {
+        [fixture('esm/module.js')]: '{ A }'
+      },
+      zstd: true
+    })
+  ).toBeGreaterThan(0)
 })
 
 it('supports import with multiple files', async () => {

@@ -10,12 +10,15 @@ import { runEsbuild } from './run-esbuild.js'
 
 const ESBUILD_EMPTY_PROJECT = 12
 const ESBUILD_EMPTY_PROJECT_GZIP = 32
+const ESBUILD_EMPTY_PROJECT_ZSTD = 21
 const ESBUILD_EMPTY_PROJECT_BROTLI = 16
 const ESBUILD_EMPTY_PROJECT_IMPORT = 34
 const ESBUILD_EMPTY_PROJECT_IMPORT_GZIP = 46
+const ESBUILD_EMPTY_PROJECT_IMPORT_ZSTD = 43
 const ESBUILD_EMPTY_PROJECT_IMPORT_BROTLI = 30
 const ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE = 331
 const ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE_GZIP = 182
+const ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE_ZSTD = 182
 const ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE_BROTLI = 182
 
 function getFiles(buildResult, check) {
@@ -126,6 +129,8 @@ export default [
         if (hasRequirePolyfill && check.import) {
           if (check.gzip === true) {
             check.size -= ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE_GZIP
+          } else if (check.zstd === true) {
+            check.size -= ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE_ZSTD
           } else if (check.brotli === false) {
             check.size -= ESBUILD_EMPTY_PROJECT_IMPORT_IGNORE
           } else {
@@ -134,6 +139,8 @@ export default [
         } else if (check.import) {
           if (check.gzip === true) {
             check.size -= ESBUILD_EMPTY_PROJECT_IMPORT_GZIP
+          } else if (check.zstd === true) {
+            check.size -= ESBUILD_EMPTY_PROJECT_IMPORT_ZSTD
           } else if (check.brotli === false) {
             check.size -= ESBUILD_EMPTY_PROJECT_IMPORT
           } else {
@@ -141,6 +148,8 @@ export default [
           }
         } else if (check.gzip === true) {
           check.size -= ESBUILD_EMPTY_PROJECT_GZIP
+        } else if (check.zstd === true) {
+          check.size -= ESBUILD_EMPTY_PROJECT_ZSTD
         } else if (check.brotli === false) {
           check.size -= ESBUILD_EMPTY_PROJECT
         } else {

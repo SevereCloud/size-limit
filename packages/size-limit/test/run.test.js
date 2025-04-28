@@ -1,6 +1,7 @@
 import './force-colors.js'
 
 import { join } from 'node:path'
+import * as zlib from 'node:zlib'
 import { expect, it, vi } from 'vitest'
 
 import run from '../run.js'
@@ -33,6 +34,8 @@ vi.mock('nanospinner', () => {
 const TMP_DIR = /size-limit-[\w-]+\/?/g
 const ROOT = join(__dirname, '..', '..', '..')
 const NODE_VERSION = parseInt(process.version.slice(1))
+
+const unsupportZstd = !Object.hasOwn(zlib, "createZstdCompress")
 
 function fixture(...files) {
   return join(ROOT, 'fixtures', ...files)
@@ -277,6 +280,10 @@ it('shows gzip text when only gzip in config', async () => {
   expect(await check('gzip')).toMatchSnapshot()
 })
 
+it.skipIf(unsupportZstd)('shows zstd text when only zstd in config', async () => {
+  expect(await check('zstd')).toMatchSnapshot()
+})
+
 it('shows gzip text when brotli and gzip in config', async () => {
   expect(await check('gzip-with-brotli')).toMatchSnapshot()
 })
@@ -354,6 +361,10 @@ it('returns zero for empty file with webpack', async () => {
   expect(await check('zero-webpack')).toMatchSnapshot()
 })
 
+it('returns zero for empty webpack file and with zstd', async () => {
+  expect(await check('zero-webpack-zstd')).toMatchSnapshot()
+})
+
 it('returns zero for empty webpack file without compression', async () => {
   expect(await check('zero-webpack-non-compression')).toMatchSnapshot()
 })
@@ -364,6 +375,10 @@ it('returns zero for empty file with esbuild', async () => {
 
 it('returns zero for empty esbuild file and with gzip', async () => {
   expect(await check('zero-esbuild-gzip')).toMatchSnapshot()
+})
+
+it.skipIf(unsupportZstd)('returns zero for empty esbuild file and with zstd', async () => {
+  expect(await check('zero-esbuild-zstd')).toMatchSnapshot()
 })
 
 it('returns zero for empty esbuild file and without compression', async () => {
@@ -396,6 +411,13 @@ it.skipIf(NODE_VERSION < 21)(
   'supports import and ignore for esbuild and gzip',
   async () => {
     expect(clean(await check('peer-esbuild-gzip'))).toMatchSnapshot()
+  }
+)
+
+it.skipIf(unsupportZstd)(
+  'supports import and ignore for esbuild and zstd',
+  async () => {
+    expect(clean(await check('peer-esbuild-zstd'))).toMatchSnapshot()
   }
 )
 

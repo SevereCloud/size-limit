@@ -31,6 +31,11 @@ export interface Check {
    */
   gzip?: boolean
 
+  /**
+   * With `true` it will use Zstd compression and disable Brotli compression.
+   */
+  zstd?: boolean
+
   hidePassed?: boolean
 
   highlightLess?: boolean

@@ -366,6 +366,24 @@ it('renders result for file with gzip', () => {
   ).toMatchSnapshot()
 })
 
+it('renders result for file with zstd', () => {
+  expect(
+    results(['file'], {
+      checks: [
+        {
+          name: 'with zstd',
+          passed: true,
+          size: 100,
+          sizeLimit: 99,
+          zstd: true
+        }
+      ],
+      configPath: '.size-limit.json',
+      failed: false
+    })
+  ).toMatchSnapshot()
+})
+
 it('renders Webpack stats help message', () => {
   expect(
     results(['webpack'], {

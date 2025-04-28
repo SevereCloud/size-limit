@@ -39,7 +39,8 @@ const MESSAGES = {
   unknownEntry: entry =>
     `Size Limit didn’t find *${entry}* entry in the custom bundler config`,
   unknownOption: opt =>
-    `Unknown option *${opt}* in config. Check Size Limit docs and version.`
+    `Unknown option *${opt}* in config. Check Size Limit docs and version.`,
+  unsupportZstd: () => 'The runtime does not support zstd. Use Node.js v22.15.0 or later'
 }
 
 const ADD_CONFIG_EXAMPLE = {

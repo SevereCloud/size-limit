@@ -2,12 +2,15 @@ import filePkg from '@size-limit/file'
 import { existsSync } from 'node:fs'
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import * as zlib from 'node:zlib'
 import { SizeLimitError } from 'size-limit'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import webpackPkg from '../index.js'
 const [file] = filePkg
 const [webpack] = webpackPkg
+
+const unsupportZstd = !Object.hasOwn(zlib, 'createZstdCompress')
 
 const ROOT_CONFIG = join(__dirname, '..', '..', '.size-limit.json')
 const DIST = join(process.cwd(), 'dist')
@@ -324,6 +327,21 @@ it('supports specifying the import', async () => {
     })
   ).toBeCloseTo(70, -1)
 })
+
+it.skipIf(unsupportZstd)(
+  'supports specifying the import with zstd',
+  async () => {
+    expect(
+      await getSize({
+        files: [fixture('esm/module.js')],
+        import: {
+          [fixture('esm/module.js')]: '{ A }'
+        },
+        zstd: true
+      })
+    ).toBe(1)
+  }
+)
 
 it('supports import with multiple files', async () => {
   expect(

@@ -460,7 +460,7 @@ For example, if you want to use `@size-limit/webpack`, you can just use
 
 Plugins:
 
-* `@size-limit/file` checks the size of files with Brotli (default), Gzip
+* `@size-limit/file` checks the size of files with Brotli (default), Zstd, Gzip
   or without compression.
 * `@size-limit/webpack` adds your library to empty webpack project
   and prepares bundle file for `file` plugin.
@@ -572,6 +572,8 @@ Each section in the config can have these options:
 * **webpack**: with `false` it will disable webpack.
 * **running**: with `false` it will disable calculating running time.
 * **gzip**: with `true` it will use Gzip compression and disable
+  Brotli compression.
+* **zstd**: with `true` it will use Zstd compression and disable
   Brotli compression.
 * **brotli**: with `false` it will disable any compression.
 * **config**: a path to a custom webpack config.

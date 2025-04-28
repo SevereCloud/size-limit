@@ -161,6 +161,14 @@ exports[`renders result for file with gzip 1`] = `
 "
 `;
 
+exports[`renders result for file with zstd 1`] = `
+"  
+  Size limit: [32m[1m99 B[22m[39m
+  Size:       [32m[1m100 B[22m[39m [90mzstded[39m
+  
+"
+`;
+
 exports[`renders result for file without compression 1`] = `
 "  
   Size limit: [32m[1m99 B[22m[39m

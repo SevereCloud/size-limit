@@ -10,9 +10,11 @@ import { runWebpack } from './run-webpack.js'
 
 const WEBPACK_EMPTY_PROJECT = 0
 const WEBPACK_EMPTY_PROJECT_GZIP = 20
+const WEBPACK_EMPTY_PROJECT_ZSTD = 9
 const WEBPACK_EMPTY_PROJECT_BROTLI = 1
 const WEBPACK_EMPTY_PROJECT_IMPORT = 37
 const WEBPACK_EMPTY_PROJECT_IMPORT_GZIP = 57
+const WEBPACK_EMPTY_PROJECT_IMPORT_ZSTD = 46
 const WEBPACK_EMPTY_PROJECT_IMPORT_BROTLI = 41
 
 function getFiles(stats, check) {
@@ -112,6 +114,8 @@ export default [
         if (check.import) {
           if (check.gzip === true) {
             check.size -= WEBPACK_EMPTY_PROJECT_IMPORT_GZIP
+          } else if (check.zstd === true) {
+            check.size -= WEBPACK_EMPTY_PROJECT_IMPORT_ZSTD
           } else if (check.brotli === false) {
             check.size -= WEBPACK_EMPTY_PROJECT_IMPORT
           } else {
@@ -119,6 +123,8 @@ export default [
           }
         } else if (check.gzip === true) {
           check.size -= WEBPACK_EMPTY_PROJECT_GZIP
+        } else if (check.zstd === true) {
+          check.size -= WEBPACK_EMPTY_PROJECT_ZSTD
         } else if (check.brotli === false) {
           check.size -= WEBPACK_EMPTY_PROJECT
         } else {
